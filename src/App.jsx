@@ -214,7 +214,7 @@ function App() {
           <h3>Support</h3>
           <p>Need help with onboarding or the SEREYA waitlist?</p>
           <p>
-            Email: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+            Email: <a href={`mailto:${SUPPORT_EMAIL}`}>support@sereya.com</a>
           </p>
           <p>
             Phone: <a href="tel:+254794083470">Call Support</a>
