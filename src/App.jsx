@@ -190,7 +190,7 @@ function App() {
             </form>
             {isSubmitted && (
               <p className="waitlist-success" role="status">
-                Thanks, you are on the list.
+                THANK YOU FOR JOINING THE WAITLIST! WE'LL BE IN TOUCH WITH UPDATES AND EARLY ACCESS DETAILS.
               </p>
             )}
           </div>
