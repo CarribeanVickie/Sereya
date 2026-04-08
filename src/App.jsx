@@ -1,5 +1,8 @@
 import logo from './assets/logo-nobg.png'
-import heroPreview from './assets/hero.png'
+import image1 from './assets/image1.png'
+import image2 from './assets/image2.jpg'
+import image3 from './assets/image3.jpg'
+import image4 from './assets/image4.png'
 import './App.css'
 
 const featureCards = [
@@ -7,19 +10,19 @@ const featureCards = [
     title: 'Analyze',
     description:
       'Sereya observes your website and reveals trends, market shifts, and ranking behavior in one simple dashboard.',
-    image: heroPreview,
+    image: image1,
   },
   {
     title: 'Prediction',
     description:
       'It predicts what matters next so your team can prioritize high-impact improvements with confidence.',
-    image: heroPreview,
+    image: image3,
   },
   {
     title: 'Create',
     description:
       'AI-powered growth recommendations guide your next actions to keep your momentum moving forward.',
-    image: heroPreview,
+    image: image2,
   },
 ]
 
@@ -59,7 +62,7 @@ function App() {
           </div>
 
           <div className="hero-preview" role="img" aria-label="Sereya dashboard preview">
-            <img src={heroPreview} alt="Dashboard preview" />
+            <img src={image4} alt="Dashboard preview" />
           </div>
         </section>
 
