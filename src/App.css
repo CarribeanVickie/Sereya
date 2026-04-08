@@ -369,6 +369,14 @@ html {
   background: rgba(255, 255, 255, 0.92);
 }
 
+.newsletter-note {
+  margin: 10px 0 0;
+  color: #6b2330;
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
 .site-footer {
   margin-top: 18px;
   padding: 20px 16px 30px;

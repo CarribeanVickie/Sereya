@@ -39,9 +39,13 @@ const socialLinks = {
   x: '', // Add X URL here later
 }
 
+const SUPPORT_EMAIL = 'frankmmwaffle@gmail.com'
+
 function App() {
   const [email, setEmail] = useState('')
+  const [newsletterEmail, setNewsletterEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [newsletterSubmitted, setNewsletterSubmitted] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -55,6 +59,18 @@ function App() {
     if (!email.trim()) return
     setIsSubmitted(true)
     setEmail('')
+  }
+
+  const handleNewsletterSubmit = (event) => {
+    event.preventDefault()
+    if (!newsletterEmail.trim()) return
+
+    const subject = '[IMPORTANT] Newsletter Application Request'
+    const body = `Hello SEREYA Support,\n\nThe person with email "${newsletterEmail}" is requesting to apply for the SEREYA newsletter.\n\nPlease add them to the newsletter list.\n\nThanks.`
+    window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+
+    setNewsletterSubmitted(true)
+    setNewsletterEmail('')
   }
 
   return (
@@ -198,7 +214,7 @@ function App() {
           <h3>Support</h3>
           <p>Need help with onboarding or the SEREYA waitlist?</p>
           <p>
-            Email: <a href="mailto:frankmmwaffle@gmail.com">support@sereya.com</a>
+            Email: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
           </p>
           <p>
             Phone: <a href="tel:+254794083470">Call Support</a>
@@ -207,13 +223,25 @@ function App() {
 
         <section className="newsletter-section" aria-label="Newsletter">
           <h3>Newsletter</h3>
-          <p>Placeholder for newsletter signup. Add your email service integration later.</p>
-          <div className="newsletter-placeholder">
-            <input type="email" placeholder="Your email address" aria-label="Newsletter email" />
-            <button type="button" className="btn btn-primary">
+          <p>Apply for newsletter updates from SEREYA.</p>
+          <form className="newsletter-placeholder" onSubmit={handleNewsletterSubmit}>
+            <input
+              type="email"
+              placeholder="Your email address"
+              aria-label="Newsletter email"
+              value={newsletterEmail}
+              onChange={(event) => setNewsletterEmail(event.target.value)}
+              required
+            />
+            <button type="submit" className="btn btn-primary">
               Subscribe
             </button>
-          </div>
+          </form>
+          {newsletterSubmitted && (
+            <p className="newsletter-note" role="status">
+              Email draft opened. Send it to complete your newsletter request.
+            </p>
+          )}
         </section>
 
         <footer className="site-footer">
