@@ -1,5 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { useGLTF } from '@react-three/drei'
 import logo from './assets/logo-nobg.png'
 import image1 from './assets/image1.png'
@@ -52,6 +51,15 @@ const socialLinks = {
 }
 
 const SUPPORT_EMAIL = 'frankmmwaffle@gmail.com'
+const LazyHeroScene = lazy(() => import('./HeroScene'))
+
+function HeroModelPlaceholder() {
+  return (
+    <div className="hero-model-placeholder" aria-hidden="true">
+      <div className="hero-model-placeholder__item" />
+    </div>
+  )
+}
 
 // ======================
 // SEO importance content
@@ -83,62 +91,6 @@ const seoImportance = [
   },
 ]
 
-// ======================
-// 3D hero model component
-// ======================
-function HeroModel() {
-  const group = useRef()
-  const { scene } = useGLTF(modelPath)
-
-  useFrame((state, delta) => {
-    if (group.current) {
-      group.current.rotation.y += Math.min(delta, 0.03) * 0.35
-    }
-  })
-
-  return (
-    <group ref={group} rotation={[0, 0, 0]} dispose={null}>
-      <primitive object={scene} scale={1.02} position={[0, -0.04, 0]} />
-    </group>
-  )
-}
-
-// ======================
-// Hero 3D scene container
-// ======================
-function HeroScene() {
-  return (
-    <Canvas
-      className="hero-canvas"
-      camera={{
-        position: [0, 0, 8],
-        fov: 45,
-        near: 0.1,
-        far: 1000,
-      }}
-      gl={{
-        alpha: true,
-        antialias: true,
-      }}
-    >
-      <ambientLight intensity={1} />
-
-      <directionalLight
-        intensity={1}
-        position={[3, 3, 3]}
-      />
-
-      <directionalLight
-        intensity={0.5}
-        position={[-3, 2, -2]}
-      />
-
-      <Suspense fallback={null}>
-        <HeroModel />
-      </Suspense>
-    </Canvas>
-  )
-}
 useGLTF.preload(modelPath)
 
 // ======================
@@ -158,6 +110,7 @@ function App() {
     const savedTheme = localStorage.getItem('sereya-theme')
     return savedTheme || 'light'
   })
+  const [heroDpr, setHeroDpr] = useState([1, 1.5])
   const [typedSeoHeading, setTypedSeoHeading] = useState('')
   const [typedSeoSubtext, setTypedSeoSubtext] = useState('')
   const [seoHeadingComplete, setSeoHeadingComplete] = useState(false)
@@ -208,6 +161,10 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const ratio = Math.min(window.devicePixelRatio || 1, 1.5)
+    setHeroDpr([1, ratio])
+    import('./HeroScene')
+
     const headingText = 'What SEO Actually Delivers'
     const summaryText = 'These outcomes show how search growth supports real business results.'
     let headingIndex = 0
@@ -445,7 +402,9 @@ function App() {
               ====================== */}
               <div className="hero-model-panel reveal-item" aria-hidden="true">
                 <div className="hero-3d-canvas">
-                  <HeroScene />
+                  <Suspense fallback={<HeroModelPlaceholder />}>
+                    <LazyHeroScene dpr={heroDpr} />
+                  </Suspense>
                 </div>
               </div>
               <div className="hero-headline-wrap reveal-item">
